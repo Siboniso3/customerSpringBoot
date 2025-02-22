@@ -16,22 +16,31 @@ public class CustomerController {
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
-    @GetMapping(value = "")
+    @RequestMapping(value = "", method=RequestMethod.GET)
     public List<Customer>getAllCustomer(){
         return this.customerService.getAllCustomers();
     }
 
-    @GetMapping(value = "/{id}")
+    @RequestMapping(value = "/{id}" ,method=RequestMethod.GET)
     public Customer getSpecificCustomer(@PathVariable int id){
         return this.customerService.specificCustomer(id);
     }
-    @RequestMapping(value = "/{id}/delete")
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.DELETE)
     public void deleteSpecific(@PathVariable int id){
      this.customerService.deleteSpecific(id);
     }
     @DeleteMapping(value = "/delete")
     public void deleteAll(){
         this.customerService.deleteAllCustomers();
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public void addCustomer(@RequestBody Customer customer){
+        this.customerService.addCustomer(customer);
+    }
+    @RequestMapping(value = "/{id}/edit", method = RequestMethod.PUT)
+    public void editCustomer(@RequestBody Customer customer, @PathVariable int id){
+        this.customerService.editCustomer(customer,id);
     }
 
 //    @GetMapping
